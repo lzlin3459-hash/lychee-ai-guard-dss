@@ -1,0 +1,54 @@
+<view class="container">
+  <view class="header">
+    <text class="title">🛡️ 荔枝 AI 卫士版</text>
+    <text class="subtitle">您的随身果园植保专家 · 极简大字版</text>
+  </view>
+  
+  <view class="action-buttons">
+    <button class="upload-btn primary" bindtap="chooseCamera">📸 拍张照片</button>
+    <button class="upload-btn secondary" bindtap="chooseAlbum">🖼️ 相册选择</button>
+  </view>
+  
+  <view class="result-card" wx:if="{{imagePath}}">
+    <!-- 顶部状态栏 -->
+    <view class="card-header">
+      <view class="status-indicator {{aiMode == 'error' ? 'error-dot' : 'success-dot'}}"></view>
+      <text class="card-title">诊断报告栏</text>
+    </view>
+
+    <!-- 影像底片区 -->
+    <view class="image-wrapper">
+      <image class="preview-img" src="{{imagePath}}" mode="aspectFill"></image>
+      <view class="image-overlay">图像接入成功</view>
+    </view>
+    
+    <!-- 动态模式标签 -->
+    <view class="mode-banner" wx:if="{{aiMode == 'confirm'}}">
+      <text class="warning-text">⚠️ 系统发现易混淆特征，请人工参考选项判定！</text>
+    </view>
+
+    <!-- 多结果渲染列表区 -->
+    <view class="analysis-panel">
+      <!-- 极简大字辅助提示 -->
+      <view class="panel-section">
+        <text class="section-title">🔍 AI 分析方案</text>
+      </view>
+
+      <view class="advice-content" wx:for="{{aiCandidates}}" wx:key="index">
+        <view class="candidate-header">
+          <text class="candidate-name">{{item.name}}</text>
+          <text wx:if="{{item.conf !== null}}" class="conf-badge">(置信度: {{item.conf}}%)</text>
+          <text wx:else class="orange-text">(需人工确认)</text>
+        </view>
+        <text class="candidate-desc">{{item.desc}}。</text>
+        <text class="candidate-advice">处方：{{item.advice}}</text>
+      </view>
+    </view>
+    
+    <!-- 强力免责声明区 (底线红线) -->
+    <view class="disclaimer-area">
+      <text class="disclaimer-title">🚨 风险提示：</text>
+      <text class="disclaimer-text">AI 仅供参考，不承担用药损失责任。诊断结果非最终医疗凭证，请结合实际谨慎用药。</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+train: ./images
+val: ./images
+nc: 5
+names: ['Stink_Bug', 'Borer', 'Frost_Blight', 'Anthracnose', 'Gall_Mite']
